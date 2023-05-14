@@ -5,7 +5,12 @@ export interface IPost extends Document {
   body: string;
   image: string;
   likes: Types.ObjectId[];
-  comments: Types.ObjectId[];
+  comments: [
+    {
+      comment: string;
+      postedBy: Types.ObjectId;
+    }
+  ];
   postedBy: Types.ObjectId;
 }
 
@@ -32,7 +37,9 @@ const PostSchema = new Schema<IPost>(
     ],
     comments: [
       {
-        text: String,
+        comment: {
+          type: String,
+        },
         postedBy: {
           type: Schema.Types.ObjectId,
           ref: "User",

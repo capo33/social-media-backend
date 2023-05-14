@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import { Request, Response } from "express";
 import UserModel from "../models/User";
-import { generateToken } from "../utils/GenerateToken";
+import { generateToken } from "../utils/generateToken";
 
 // @desc    Register a new user
 // @route   POST /api/v1/auth/register
@@ -78,10 +78,15 @@ const login = async (req: Request, res: Response) => {
 // @route   GET /api/v1/auth/profile
 // @access  Private
 const profile = async (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "User profile fetched successfully",
-    user: req.user,
-  });
+  try  {
+    res.status(200).json({
+      message: "User profile fetched successfully",
+      user: req.user,
+    });
+  }
+  catch (err) {
+    if (err instanceof Error) res.status(500).json({ message: err.message });
+  }
 };
 
 export { register, login, profile };

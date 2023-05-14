@@ -4,6 +4,8 @@ import cors from "cors";
 
 import env from "../src/utils/validateEnv";
 import { connectDB } from "../src/config/db";
+import authRoutes from "../src/routes/Auth.routes";
+import postRoutes from "../src/routes/Post.routes";
 
 // Load env variables
 dotenv.config();
@@ -28,6 +30,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Routes
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/posts", postRoutes);
 
 // Start server
 try {
