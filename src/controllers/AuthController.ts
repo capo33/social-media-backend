@@ -1,7 +1,7 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
 import UserModel from "../models/User";
 import { generateToken } from "../utils/generateToken";
 
