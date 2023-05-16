@@ -2,7 +2,7 @@ import { Schema, Document, Types, model } from "mongoose";
 
 export interface IPost extends Document {
   title: string;
-  body: string;
+  description: string;
   image: string;
   likes: Types.ObjectId[];
   comments: [
@@ -20,7 +20,7 @@ const PostSchema = new Schema<IPost>(
       type: String,
       required: true,
     },
-    body: {
+    description: {
       type: String,
       required: true,
     },

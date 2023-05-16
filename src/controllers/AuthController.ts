@@ -32,8 +32,7 @@ const register = async (req: Request, res: Response) => {
     res.status(201).json({
       success: true,
       message: "User created successfully",
-
-      user: userWithoutPassword,
+      userWithoutPassword,
       token,
     });
   } catch (error) {
@@ -65,9 +64,10 @@ const login = async (req: Request, res: Response) => {
     const { password: _, ...userWithoutPassword } = user.toObject(); // we use toObject() instead of _doc in typescript to get the user object without the password
 
     res.status(200).json({
+      success: true,
       message: "User logged in successfully",
       token: token,
-      user: userWithoutPassword,
+      userWithoutPassword,
     });
   } catch (err) {
     if (err instanceof Error) res.status(500).json({ message: err.message });
@@ -78,13 +78,12 @@ const login = async (req: Request, res: Response) => {
 // @route   GET /api/v1/auth/profile
 // @access  Private
 const profile = async (req: Request, res: Response) => {
-  try  {
+  try {
     res.status(200).json({
       message: "User profile fetched successfully",
       user: req.user,
     });
-  }
-  catch (err) {
+  } catch (err) {
     if (err instanceof Error) res.status(500).json({ message: err.message });
   }
 };

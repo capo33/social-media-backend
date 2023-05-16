@@ -22,16 +22,16 @@ const getPosts = async (req: Request, res: Response) => {
 // @route   POST /api/v1/posts
 // @access  Private
 const createPost = async (req: Request, res: Response) => {
-  const { title, body, image } = req.body;
+  const { title, description, image } = req.body;
   try {
     // Check if all fields are provided
-    if (!title || !body || !image) {
+    if (!title || !description || !image) {
       return res.status(422).json({ message: "Please add all the fields" });
     }
 
     const post = await PostModel.create({
       title,
-      body,
+      description,
       image,
       postedBy: req.user,
     });
@@ -157,11 +157,11 @@ const commentPost = async (req: Request, res: Response) => {
 const deleteComment = async (req: Request, res: Response) => {
   try {
     const post = await PostModel.findByIdAndUpdate(
-      req.params.postId, 
+      req.params.postId,
       {
         $pull: {
           comments: {
-            _id: req.params.commentId, 
+            _id: req.params.commentId,
           },
         },
       },
