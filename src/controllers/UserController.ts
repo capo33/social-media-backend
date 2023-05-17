@@ -34,10 +34,29 @@ const getUserProfile = async (req: Request, res: Response) => {
 // @route   PUT /api/v1/users/follow
 // @access  Private
 const followUser = async (req: Request, res: Response) => {
+  //   try {
+  //     // We are following this user now - so we add this user to our following list
+  //     await UserModel.findById(req.params.id)
+  //       .then((user) => {
+  //         if (!user?.followers.includes(req.user?._id!)) {
+  //           user?.updateOne({ $push: { followers: req.user?._id } }).then(() => {
+  //             res.status(200).json("user has been followed");
+  //           });
+  //         } else {
+  //           res.status(403).json("you allready follow this user");
+  //         }
+  //       })
+
+  //   } catch (err) {
+  //     if (err instanceof Error) res.status(500).json({ message: err.message });
+  //   }
+  // };
+
+  // const followUser = async (req: Request, res: Response) => {
   try {
     // We are following this user now - so we add this user to our following list
     const user = await UserModel.findByIdAndUpdate(
-      req.body.followId,
+      req.body.followId, // followId is the id of the user we want to follow
       {
         // we are adding the user id to the following array
 
@@ -54,6 +73,7 @@ const followUser = async (req: Request, res: Response) => {
       },
       { new: true }
     ).select("-password");
+    console.log("user, me", user, me);
 
     res.status(200).json({ user, me });
   } catch (err) {
@@ -96,6 +116,12 @@ const unfollowUser = async (req: Request, res: Response) => {
   }
 };
 
+// const toggleFollow = async (req: Request, res: Response) => {
+//   const { id } = req.params;
+//   try {
+//     if(!req.user) throw new Error("User not found");
+
+//     const
 // @desc    Update user profile
 // @route   PUT /api/v1/users/update
 // @access  Private
@@ -117,4 +143,23 @@ const updateUserProfile = async (req: Request, res: Response) => {
   }
 };
 
-export { getUserProfile, followUser, unfollowUser, updateUserProfile };
+// @desc    Get all users
+// @route   GET /api/v1/users
+// @access  Public
+const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await UserModel.find().select("-password");
+    res.status(200).json({ users });
+  } catch (err) {
+    if (err instanceof Error) res.status(500).json({ message: err.message });
+  }
+};
+
+export {
+  getUserProfile,
+  followUser,
+  unfollowUser,
+  updateUserProfile,
+  getAllUsers,
+};
+  

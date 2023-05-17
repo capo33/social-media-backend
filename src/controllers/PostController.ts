@@ -25,9 +25,9 @@ const createPost = async (req: Request, res: Response) => {
   const { title, description, image } = req.body;
   try {
     // Check if all fields are provided
-    if (!title || !description || !image) {
-      return res.status(422).json({ message: "Please add all the fields" });
-    }
+    // if (!title || !description || !image) {
+    //   return res.status(422).json({ message: "Please add all the fields" });
+    // }
 
     const post = await PostModel.create({
       title,
@@ -78,6 +78,8 @@ const likePost = async (req: Request, res: Response) => {
         new: true,
       }
     );
+    console.log(post);
+    
     res.status(200).json(post);
   } catch (error) {
     if (error instanceof Error)
@@ -88,7 +90,7 @@ const likePost = async (req: Request, res: Response) => {
       });
   }
 };
-
+ 
 // @desc    Unlike a post
 // @route   PUT /api/v1/posts/unlike
 // @access  Private
@@ -185,20 +187,20 @@ const deleteComment = async (req: Request, res: Response) => {
 // @route   DELETE /api/v1/posts/:postId
 // @access  Private
 const deletePost = async (req: Request, res: Response) => {
+  const { postId } = req.params;
   try {
-    const post = await PostModel.findOne({ _id: req.params.postId }).populate(
-      "postedBy",
-      "_id"
-    );
+    const post = await PostModel.findById(postId).populate("postedBy", "_id");
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
     // Check if the user who is deleting the post is the same user who created the post
-    if (post.postedBy._id.toString() === req.user?._id.toString()) {
-      await post.deleteOne();
-      res.status(200).json({ message: "Post deleted successfully" });
+    if (post.postedBy?._id.toString() !== req.user?._id.toString()) {
+      return res.status(200).json({ message: "You are not authorized" });
     }
+
+    await PostModel.findByIdAndDelete(postId);
+    res.status(200).json({ message: "Post deleted successfully" });
   } catch (err) {
     if (err instanceof Error) res.status(500).json({ message: err.message });
   }

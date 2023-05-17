@@ -32,7 +32,7 @@ const register = async (req: Request, res: Response) => {
     res.status(201).json({
       success: true,
       message: "User created successfully",
-      userWithoutPassword,
+      ...userWithoutPassword,
       token,
     });
   } catch (error) {
@@ -67,7 +67,7 @@ const login = async (req: Request, res: Response) => {
       success: true,
       message: "User logged in successfully",
       token: token,
-      userWithoutPassword,
+      ...userWithoutPassword,
     });
   } catch (err) {
     if (err instanceof Error) res.status(500).json({ message: err.message });

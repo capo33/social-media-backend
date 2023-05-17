@@ -7,12 +7,12 @@ const router = Router();
 
 router.get("/", PostController.getPosts);
 router.post("/", auth, PostController.createPost);
-router.get("/my-posts", auth, PostController.getMyPosts);
+router.get("/my-posts", PostController.getMyPosts);
 router.put("/like", auth, PostController.likePost);
 router.put("/unlike", auth, PostController.unlikePost);
 router.put("/comment", auth, PostController.commentPost);
 router.delete(
-  "/delete-comment/:postId/:commentId",
+  "/comment/:postId/:commentId",
   auth,
   PostController.deleteComment
 );
