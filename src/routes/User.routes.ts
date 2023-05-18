@@ -8,7 +8,7 @@ const router = Router();
 router.get("/allusers", UserController.getAllUsers);
 router.get("/:id", UserController.getUserProfile);
 router.put("/follow", auth, UserController.followUser);
-router.put("/unfollow", UserController.unfollowUser);
+router.put("/unfollow", auth, UserController.unfollowUser);
 router.put("/update", UserController.updateUserProfile);
 
 export default router;

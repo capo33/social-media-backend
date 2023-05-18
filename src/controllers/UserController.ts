@@ -34,32 +34,12 @@ const getUserProfile = async (req: Request, res: Response) => {
 // @route   PUT /api/v1/users/follow
 // @access  Private
 const followUser = async (req: Request, res: Response) => {
-  //   try {
-  //     // We are following this user now - so we add this user to our following list
-  //     await UserModel.findById(req.params.id)
-  //       .then((user) => {
-  //         if (!user?.followers.includes(req.user?._id!)) {
-  //           user?.updateOne({ $push: { followers: req.user?._id } }).then(() => {
-  //             res.status(200).json("user has been followed");
-  //           });
-  //         } else {
-  //           res.status(403).json("you allready follow this user");
-  //         }
-  //       })
-
-  //   } catch (err) {
-  //     if (err instanceof Error) res.status(500).json({ message: err.message });
-  //   }
-  // };
-
-  // const followUser = async (req: Request, res: Response) => {
   try {
     // We are following this user now - so we add this user to our following list
     const user = await UserModel.findByIdAndUpdate(
       req.body.followId, // followId is the id of the user we want to follow
       {
         // we are adding the user id to the following array
-
         $push: { followers: req.user?._id },
       },
       { new: true }
@@ -116,12 +96,6 @@ const unfollowUser = async (req: Request, res: Response) => {
   }
 };
 
-// const toggleFollow = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   try {
-//     if(!req.user) throw new Error("User not found");
-
-//     const
 // @desc    Update user profile
 // @route   PUT /api/v1/users/update
 // @access  Private
@@ -162,4 +136,3 @@ export {
   updateUserProfile,
   getAllUsers,
 };
-  
