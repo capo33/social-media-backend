@@ -129,10 +129,32 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+// @desc    Update profile picture
+// @route   PUT /api/v1/users/updatepic
+// @access  Private
+const updateProfilePic = async (req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      req.user?._id,
+      {
+        $set: { pic: req.body.pic },
+      },
+      {
+        new: true,
+      }
+    ).select("-password");
+
+    res.status(200).json({ user });
+  } catch (err) {
+    if (err instanceof Error) res.status(500).json({ message: err.message });
+  }
+};
+
 export {
   getUserProfile,
   followUser,
   unfollowUser,
   updateUserProfile,
   getAllUsers,
+  updateProfilePic,
 };
