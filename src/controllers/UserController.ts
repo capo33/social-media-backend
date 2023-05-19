@@ -53,7 +53,6 @@ const followUser = async (req: Request, res: Response) => {
       },
       { new: true }
     ).select("-password");
-    console.log("user, me", user, me);
 
     res.status(200).json({ user, me });
   } catch (err) {
@@ -88,7 +87,6 @@ const unfollowUser = async (req: Request, res: Response) => {
     );
     res.status(200).json({ user, me });
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       message: "Server Error",
       error: error,
@@ -137,7 +135,7 @@ const updateProfilePic = async (req: Request, res: Response) => {
     const user = await UserModel.findByIdAndUpdate(
       req.user?._id,
       {
-        $set: { pic: req.body.pic },
+        $set: { avatar: req.body.avatar },
       },
       {
         new: true,

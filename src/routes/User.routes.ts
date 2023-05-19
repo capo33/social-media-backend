@@ -10,6 +10,6 @@ router.get("/:id", UserController.getUserProfile);
 router.put("/follow", auth, UserController.followUser);
 router.put("/unfollow", auth, UserController.unfollowUser);
 router.put("/update", UserController.updateUserProfile);
-router.put("/updatepic", UserController.updateProfilePic);
+router.put("/updateProfilePic",auth, UserController.updateProfilePic);
 
 export default router;

@@ -78,7 +78,6 @@ const likePost = async (req: Request, res: Response) => {
         new: true,
       }
     );
-    console.log(post);
     
     res.status(200).json(post);
   } catch (error) {
