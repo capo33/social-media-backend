@@ -1,13 +1,13 @@
-## Yelp Clone with PERN-STACK
+## Social-Media MERN-STACK
 
-![alt text](./restaurants_data.png)
+![alt text](./social-posts.png)
 
 ## Installation
 
 1- Clone the repo
 
 ```bash
-https://github.com/capo33/yelp_clone/tree/main/backend
+https://github.com/capo33/social-media-backend
 ```
 
 2- Install dependencies
@@ -22,12 +22,14 @@ yarn
 
 ```bash
 ## Port to listen on
-PORT = your_port
+PORT= your_port
 
 # MongoDB connection string
-MONGODB_URI=mongodb://localhost:27017/your_DB
-```
+MONGODB_URI= mongodb://localhost:27017/your_DB
 
+#JWT secret
+JWT_SECRET= your secret
+```
 
 ## Usage
 
@@ -36,7 +38,6 @@ MONGODB_URI=mongodb://localhost:27017/your_DB
 ```
 yarn run dev
 ```
-
 
 ## Tech
 
